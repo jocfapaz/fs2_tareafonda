@@ -92,36 +92,67 @@ export default function App() {
   };
 
   return (
-    <Container className="py-4">
-      <h1 className="mb-1">Fonda San Belarmino 🇨🇱</h1>
-      <p className="text-muted">Control de bebidas y ventas</p>
+    <div className="min-h-screen bg-amber-50/60 py-8 px-4 sm:px-6 lg:px-8 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]">
+      <div className="max-w-5xl mx-auto space-y-6">
+        
+        {/* Banner Fondero Principal */}
+        <header className="bg-gradient-to-r from-blue-900 via-blue-800 to-red-700 rounded-2xl shadow-xl p-6 text-white border-b-8 border-yellow-400 relative overflow-hidden">
+          <div className="absolute -right-4 -bottom-4 opacity-15 text-8xl select-none">
+            🍷
+          </div>
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 relative z-10">
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="text-3xl">🇨🇱</span>
+                <h1 className="text-3xl sm:text-4xl font-black tracking-wider uppercase drop-shadow-md">
+                  Fonda San Belarmino
+                </h1>
+              </div>
+              <p className="text-amber-200 mt-1 font-medium italic text-sm sm:text-base">
+                "¡Tiquitiquití! Control oficial de copetes y terremotos"
+              </p>
+            </div>
+            <span className="bg-yellow-400 text-slate-900 font-black text-xs uppercase px-4 py-2 rounded-full shadow-md tracking-wider border-2 border-white">
+              ⚡ Caja Abierta
+            </span>
+          </div>
+        </header>
 
-      {errorGlobal && (
-        <Alert variant="danger" onClose={() => setErrorGlobal(null)} dismissible>
-          {errorGlobal}
-        </Alert>
-      )}
+        {/* Alerta de Error */}
+        {errorGlobal && (
+          <div className="bg-red-100 border-l-8 border-red-600 p-4 rounded-xl shadow-md flex justify-between items-center text-red-900">
+            <p className="font-bold text-sm">⚠️ {errorGlobal}</p>
+            <button 
+              onClick={() => setErrorGlobal(null)}
+              className="font-black text-lg hover:text-red-600"
+            >
+              ✕
+            </button>
+          </div>
+        )}
 
-      {/* Formulario para agregar una bebida */}
-      <BebidaForm onSave={handleCrearBebida} errores={erroresForm} />
+        {/* Secciones del Sistema */}
+        <main className="space-y-6">
+          <BebidaForm onSave={handleCrearBebida} errores={erroresForm} />
+          <BebidaList 
+            bebidas={bebidas} 
+            onBuscar={cargarDatos} 
+            onDelete={handleEliminarBebida} 
+            onToggleRestriccion={handleToggleRestriccion} 
+          />
+          <VentaForm 
+            bebidas={bebidas} 
+            onVender={handleRegistrarVenta} 
+            errorVenta={errorVenta} 
+          />
+          <VentaHistorial ventas={ventas} />
+        </main>
 
-      {/* Tabla del catálogo con buscador integrado */}
-      <BebidaList 
-        bebidas={bebidas} 
-        onBuscar={cargarDatos} 
-        onDelete={handleEliminarBebida} 
-        onToggleRestriccion={handleToggleRestriccion} 
-      />
+        <footer className="text-center text-xs text-slate-400 font-semibold pt-4">
+          Fonda San Belarmino © DSY1104 — ¡A tomar con responsabilidad, pariente!
+        </footer>
 
-      {/* Registro de Ventas */}
-      <VentaForm 
-        bebidas={bebidas} 
-        onVender={handleRegistrarVenta} 
-        errorVenta={errorVenta} 
-      />
-
-      {/* Historial de Ventas */}
-      <VentaHistorial ventas={ventas} />
-    </Container>
+      </div>
+    </div>
   );
 }
