@@ -1,4 +1,3 @@
-📄 Contenido de TAREAS.md para backend
 # 🎯 Tareas del Proyecto - Fonda San Belarmino
 
 > Semana de entrega: del [28/09/26] al [02/10/26]
