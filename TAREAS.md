@@ -20,8 +20,8 @@
 | # | Tarea | Asignado | Estado |
 |---|-------|----------|--------|
 | 1 | Crear enums `TipoBebida` y `EstadoVenta` | [Nicolás Catalán] | [x] |
-| 2 | Crear entidad `Bebida` con validaciones | [Nicolás Catalán] | [~] |
-| 3 | Crear entidad `Venta` con relación a Bebida | [Nombre] | [ ] |
+| 2 | Crear entidad `Bebida` con validaciones | [Nicolás Catalán] | [x] |
+| 3 | Crear entidad `Venta` con relación a Bebida | [Nombre] | [x] |
 
 **Notas:**
 - La tarea 1 debe estar lista antes de empezar la 2 y 3.
