@@ -32,7 +32,7 @@
 
 | # | Tarea | Asignado | Estado |
 |---|-------|----------|--------|
-| 4 | Crear `BebidaRepository` y `VentaRepository` | [Nombre] | [ ] |
+| 4 | Crear `BebidaRepository` y `VentaRepository` | [Nicolás Catalán] | [x] |
 
 **Notas:**
 - Depende de que las entidades (2 y 3) estén listas.
