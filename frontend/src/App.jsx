@@ -96,28 +96,24 @@ export default function App() {
       <div className="max-w-5xl mx-auto space-y-6">
         
         {/* Banner Fondero Principal */}
-        <header className="bg-gradient-to-r from-blue-900 via-blue-800 to-red-700 rounded-2xl shadow-xl p-6 text-white border-b-8 border-yellow-400 relative overflow-hidden">
-          <div className="absolute -right-4 -bottom-4 opacity-15 text-8xl select-none">
-            🍷
-          </div>
+        <header className="bg-blue-900 rounded-2xl shadow-xl p-6 text-white border-b-8 border-yellow-400 relative overflow-hidden">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 relative z-10">
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="text-3xl">🇨🇱</span>
-                <h1 className="text-3xl sm:text-4xl font-black tracking-wider uppercase drop-shadow-md">
-                  Fonda San Belarmino
-                </h1>
-              </div>
-              <p className="text-amber-200 mt-1 font-medium italic text-sm sm:text-base">
-                "¡Tiquitiquití! Control oficial de copetes y terremotos"
-              </p>
-            </div>
-            <span className="bg-yellow-400 text-slate-900 font-black text-xs uppercase px-4 py-2 rounded-full shadow-md tracking-wider border-2 border-white">
-              ⚡ Caja Abierta
-            </span>
-          </div>
-        </header>
-
+        <div>
+          <div className="flex items-center gap-2">
+        <span className="text-3xl">🇨🇱</span>
+         <h1 className="text-3xl sm:text-4xl font-black tracking-wider uppercase drop-shadow-md">
+          Fonda San Belarmino
+        </h1>
+      </div>
+      <p className="text-amber-200 mt-1 font-medium italic text-sm sm:text-base">
+        "¡Tiquitiquití! Control oficial de copetes y terremotos"
+      </p>
+    </div>
+    <span className="bg-yellow-400 text-slate-900 font-black text-xs uppercase px-4 py-2 rounded-full shadow-md tracking-wider border-2 border-white">
+      ⚡ Caja Abierta
+    </span>
+  </div>
+</header>
         {/* Alerta de Error */}
         {errorGlobal && (
           <div className="bg-red-100 border-l-8 border-red-600 p-4 rounded-xl shadow-md flex justify-between items-center text-red-900">
