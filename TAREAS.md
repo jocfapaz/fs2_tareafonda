@@ -121,9 +121,9 @@
 
 | # | Tarea | Asignado | Estado |
 |---|---|---|---|
-| 9 | Crear excepciones personalizadas (`VentaException`, `RecursoNoEncontradoException`) | [Nombre] | [ ] |
-| 10 | Crear `GlobalExceptionHandler` (`@ControllerAdvice`) | [Nombre] | [ ] |
-| 11 | Configurar CORS para `http://localhost:5173` | [Nombre] | [ ] |
+| 9 | Crear excepciones personalizadas (`VentaException`, `RecursoNoEncontradoException`) | [Nombre] | [x] |
+| 10 | Crear `GlobalExceptionHandler` (`@ControllerAdvice`) | [Nombre] | [x] |
+| 11 | Configurar CORS para `http://localhost:5173` | [Nombre] | [x] |
 
 **Códigos de estado esperados:**
 - `400 Bad Request` → errores de validación campo por campo

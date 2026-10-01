@@ -52,16 +52,19 @@ public class VentaService {
 
         // Regla 1: Venta restringida
         if (bebida.isVentaRestringida()) {
+            guardarVentaRechazada(venta, "VENTA_RESTRINGIDA");
             throw new VentaException("VENTA_RESTRINGIDA", "Venta restringida para esta bebida.");
         }
 
         // Regla 2: Límite de alcohol
         if (bebida.getTipo() == TipoBebida.ALCOHOLICA && request.getUnidades() > limiteUnidades) {
+            guardarVentaRechazada(venta, "LIMITE_EXCEDIDO");
             throw new VentaException("LIMITE_EXCEDIDO", request.getUnidades() + " unidades superan el límite de " + limiteUnidades);
         }
 
         // Regla 3: Stock insuficiente
         if (bebida.getStock() < request.getUnidades()) {
+            guardarVentaRechazada(venta, "STOCK_INSUFICIENTE");
             throw new VentaException("STOCK_INSUFICIENTE", "Stock insuficiente.");
         }
 
@@ -78,6 +81,14 @@ public class VentaService {
 
         Venta guardada = ventaRepository.save(venta);
         return convertirAResponse(guardada);
+    }
+
+    // Guardar venta rechazada antes de lanzar excepción
+    private void guardarVentaRechazada(Venta venta, String motivo) {
+        venta.setEstado(EstadoVenta.RECHAZADA);
+        venta.setMotivo(motivo);
+        venta.setTotal(0);
+        ventaRepository.save(venta);
     }
 
     // Convertir Entity a DTO de salida
