@@ -17,28 +17,30 @@ import cl.dsy1104.fonda.dto.VentaRequest;
 import cl.dsy1104.fonda.dto.VentaResponse;
 import cl.dsy1104.fonda.service.VentaService;
 import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/ventas")
 @CrossOrigin(origins = "${fonda.cors.origen}")
 public class VentaController {
-@Autowired
-private VentaService ventaService;
 
-// GET /api/ventas
-@GetMapping
+    @Autowired
+    private VentaService ventaService;
+
+    // GET /api/ventas
+    @GetMapping
     public ResponseEntity<List<VentaResponse>> listar() {
-    return ResponseEntity.ok(ventaService.listarVentas());
-}
+        return ResponseEntity.ok(ventaService.listarVentas());
+    }
 
-// POST /api/ventas
-@PostMapping
+    // POST /api/ventas
+    @PostMapping
     public ResponseEntity<VentaResponse> registrar(@Valid @RequestBody VentaRequest request) {
-    VentaResponse creada = ventaService.registrarVenta(request);
-    URI location = ServletUriComponentsBuilder
-.fromCurrentRequest()
-.path("/{id}")
-.buildAndExpand(creada.getId())
-.toUri();
-return ResponseEntity.created(location).body(creada);
-}
+        VentaResponse creada = ventaService.registrarVenta(request);
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(creada.getId())
+                .toUri();
+        return ResponseEntity.created(location).body(creada);
+    }
 }

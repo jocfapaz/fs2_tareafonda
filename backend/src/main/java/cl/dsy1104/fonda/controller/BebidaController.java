@@ -54,7 +54,7 @@ public class BebidaController {
     }
     
     @PutMapping ("/{id}")
-    public ResponseEntity<BebidaResponse> actualizaarBebida(@PathVariable Long id, @Valid @RequestBody BebidaRequest bebidaRequest){
+    public ResponseEntity<BebidaResponse> actualizarBebida(@PathVariable Long id, @Valid @RequestBody BebidaRequest bebidaRequest){
         return ResponseEntity.ok(bebidaService.actualizarBebida(id, bebidaRequest));
     }
 

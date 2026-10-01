@@ -1,4 +1,3 @@
-
 package cl.dsy1104.fonda.service;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -86,18 +85,18 @@ public class BebidaService {
     private void validarCamposPorTipo(BebidaRequest request) {
         if (request.getTipo() == TipoBebida.ALCOHOLICA) {
             if (request.getGradosAlcohol() == null) {
-                throw new RuntimeException("gradosAlcohol es obligatorio para bebidas alcohólicas");
+                throw new IllegalArgumentException("gradosAlcohol es obligatorio para bebidas alcohólicas");
             }
             if (request.getGradosAlcohol() < 0.5 || request.getGradosAlcohol() > 45) {
-                throw new RuntimeException("gradosAlcohol debe estar entre 0.5 y 45");
+                throw new IllegalArgumentException("gradosAlcohol debe estar entre 0.5 y 45");
             }
             request.setAzucarPorLitro(null);
         } else if (request.getTipo() == TipoBebida.SIN_ALCOHOL) {
             if (request.getAzucarPorLitro() == null) {
-                throw new RuntimeException("azucarPorLitro es obligatorio para bebidas sin alcohol");
+                throw new IllegalArgumentException("azucarPorLitro es obligatorio para bebidas sin alcohol");
             }
             if (request.getAzucarPorLitro() < 0) {
-                throw new RuntimeException("azucarPorLitro debe ser mayor o igual a cero");
+                throw new IllegalArgumentException("azucarPorLitro debe ser mayor o igual a cero");
             }
             request.setGradosAlcohol(null);
             request.setCertificada(null);
