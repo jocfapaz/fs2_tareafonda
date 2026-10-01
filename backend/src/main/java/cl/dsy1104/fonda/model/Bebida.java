@@ -1,5 +1,6 @@
 package cl.dsy1104.fonda.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -25,6 +26,7 @@ public class Bebida {
     @Enumerated(EnumType.STRING)
     private TipoBebida tipo;
 
+    @Column(name = "volumen_ml")
     @Min(value = 100, message = "Debe estar entre 100 y 3000.")
     @Max(value = 3000, message = "Debe estar entre 100 y 3000.")
     private int volumenML;
