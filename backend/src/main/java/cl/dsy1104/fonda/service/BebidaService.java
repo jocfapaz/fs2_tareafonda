@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import cl.dsy1104.exception.RecursoNoEncontradoException;
+import cl.dsy1104.fonda.exception.RecursoNoEncontradoException;
 import cl.dsy1104.fonda.dto.BebidaRequest;
 import cl.dsy1104.fonda.dto.BebidaResponse;
 import cl.dsy1104.fonda.model.Bebida;

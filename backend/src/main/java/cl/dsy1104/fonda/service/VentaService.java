@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import cl.dsy1104.exception.RecursoNoEncontradoException;
-import cl.dsy1104.exception.VentaException;
+import cl.dsy1104.fonda.exception.RecursoNoEncontradoException;
+import cl.dsy1104.fonda.exception.VentaException;
 import cl.dsy1104.fonda.dto.VentaRequest;
 import cl.dsy1104.fonda.dto.VentaResponse;
 import cl.dsy1104.fonda.model.Bebida;
