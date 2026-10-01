@@ -1,4 +1,4 @@
-package cl.dsy1104.exception;
+package cl.dsy1104.fonda.exception;
 
 public class RecursoNoEncontradoException extends RuntimeException {
 
