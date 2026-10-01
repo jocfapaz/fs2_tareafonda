@@ -48,10 +48,10 @@
 
 | # | Tarea | Asignado | Estado |
 |---|---|---|---|
-| 14 | Crear `BebidaRequest` (entrada: crear/editar bebida) | [Nombre] | [ ] |
-| 15 | Crear `BebidaResponse` (salida: bebida + precio calculado) | [Nombre] | [ ] |
-| 16 | Crear `VentaRequest` (entrada: bebidaId + unidades) | [Nombre] | [ ] |
-| 17 | Crear `VentaResponse` (salida: venta + nombre bebida + estado + motivo) | [Nombre] | [ ] |
+| 14 | Crear `BebidaRequest` (entrada: crear/editar bebida) | [Nombre] | [x] |
+| 15 | Crear `BebidaResponse` (salida: bebida + precio calculado) | [Nombre] | [x] |
+| 16 | Crear `VentaRequest` (entrada: bebidaId + unidades) | [Nombre] | [x] |
+| 17 | Crear `VentaResponse` (salida: venta + nombre bebida + estado + motivo) | [Nombre] | [x] |
 
 **Validaciones a recordar:**
 - `BebidaRequest`:
@@ -70,8 +70,8 @@
 
 | # | Tarea | Asignado | Estado |
 |---|---|---|---|
-| 5 | Implementar `BebidaService` (CRUD + cálculo de precio + conversión DTO) | [Nombre] | [ ] |
-| 6 | Implementar `VentaService` (registro + reglas de negocio + conversión DTO) | [Nombre] | [ ] |
+| 5 | Implementar `BebidaService` (CRUD + cálculo de precio + conversión DTO) | [Nombre] | [x] |
+| 6 | Implementar `VentaService` (registro + reglas de negocio + conversión DTO) | [Nombre] | [x] |
 
 **Reglas de negocio a recordar:**
 - **Precio alcohólica:** $3.500 base (+20% si no certificada)
@@ -94,8 +94,8 @@
 
 | # | Tarea | Asignado | Estado |
 |---|---|---|---|
-| 7 | Crear `BebidaController` (CRUD + restricción) usando DTOs | [Nombre] | [ ] |
-| 8 | Crear `VentaController` (registro y listado) usando DTOs | [Nombre] | [ ] |
+| 7 | Crear `BebidaController` (CRUD + restricción) usando DTOs | [Nombre] | [x] |
+| 8 | Crear `VentaController` (registro y listado) usando DTOs | [Nombre] | [x] |
 
 **Endpoints a implementar:**
 - `GET /api/bebidas` (opcional `?nombre=`)
