@@ -52,7 +52,7 @@ public class VentaService {
 
         // Regla 1: Venta restringida
         if (bebida.isVentaRestringida()) {
-            throw new VentaException("LIMITE_EXCEDIDO", request.getUnidades() + " unidades superan el límite de " + limiteUnidades);
+            throw new VentaException("VENTA_RESTRINGIDA", "Venta restringida para esta bebida.");
         }
 
         // Regla 2: Límite de alcohol
@@ -62,7 +62,7 @@ public class VentaService {
 
         // Regla 3: Stock insuficiente
         if (bebida.getStock() < request.getUnidades()) {
-            throw new VentaException("LIMITE_EXCEDIDO", request.getUnidades() + " unidades superan el límite de " + limiteUnidades);
+            throw new VentaException("STOCK_INSUFICIENTE", "Stock insuficiente.");
         }
 
         // Si pasa todo: autorizar
