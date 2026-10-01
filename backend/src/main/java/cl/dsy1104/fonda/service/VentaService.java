@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import cl.dsy1104.exception.RecursoNoEncontradoException;
+import cl.dsy1104.exception.VentaException;
 import cl.dsy1104.fonda.dto.VentaRequest;
 import cl.dsy1104.fonda.dto.VentaResponse;
 import cl.dsy1104.fonda.model.Bebida;
@@ -15,7 +17,6 @@ import cl.dsy1104.fonda.model.TipoBebida;
 import cl.dsy1104.fonda.model.Venta;
 import cl.dsy1104.fonda.repository.BebidaRepository;
 import cl.dsy1104.fonda.repository.VentaRepository;
-import cl.dsy1104.fonda.service.BebidaService;
 
 
 @Service 
@@ -43,7 +44,7 @@ public class VentaService {
     // Registrar una nueva venta
     public VentaResponse registrarVenta(VentaRequest request) {
         Bebida bebida = bebidaRepository.findById(request.getBebidaId())
-                .orElseThrow(() -> new RuntimeException("Bebida no encontrada con el ID: " + request.getBebidaId()));
+                .orElseThrow(() -> new RecursoNoEncontradoException("Bebida no encontrada con el ID: " + request.getBebidaId()));
 
         Venta venta = new Venta();
         venta.setBebida(bebida);
@@ -51,29 +52,17 @@ public class VentaService {
 
         // Regla 1: Venta restringida
         if (bebida.isVentaRestringida()) {
-            venta.setEstado(EstadoVenta.RECHAZADA);
-            venta.setMotivo("VENTA_RESTRINGIDA");
-            venta.setTotal(0);
-            Venta guardada = ventaRepository.save(venta);
-            return convertirAResponse(guardada);
+            throw new VentaException("LIMITE_EXCEDIDO", request.getUnidades() + " unidades superan el límite de " + limiteUnidades);
         }
 
         // Regla 2: Límite de alcohol
         if (bebida.getTipo() == TipoBebida.ALCOHOLICA && request.getUnidades() > limiteUnidades) {
-            venta.setEstado(EstadoVenta.RECHAZADA);
-            venta.setMotivo("LIMITE_EXCEDIDO");
-            venta.setTotal(0);
-            Venta guardada = ventaRepository.save(venta);
-            return convertirAResponse(guardada);
+            throw new VentaException("LIMITE_EXCEDIDO", request.getUnidades() + " unidades superan el límite de " + limiteUnidades);
         }
 
         // Regla 3: Stock insuficiente
         if (bebida.getStock() < request.getUnidades()) {
-            venta.setEstado(EstadoVenta.RECHAZADA);
-            venta.setMotivo("STOCK_INSUFICIENTE");
-            venta.setTotal(0);
-            Venta guardada = ventaRepository.save(venta);
-            return convertirAResponse(guardada);
+            throw new VentaException("LIMITE_EXCEDIDO", request.getUnidades() + " unidades superan el límite de " + limiteUnidades);
         }
 
         // Si pasa todo: autorizar
