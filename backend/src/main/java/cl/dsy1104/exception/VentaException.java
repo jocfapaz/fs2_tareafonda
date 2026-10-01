@@ -1,0 +1,18 @@
+package cl.dsy1104.exception;
+
+public class VentaException extends RuntimeException {
+
+
+    private final String codigo;
+
+
+    public VentaException(String codigo, String mensaje) {
+        super(mensaje);
+        this.codigo = codigo;
+    }
+
+
+    public String getCodigo() {
+        return codigo;
+    }
+}
