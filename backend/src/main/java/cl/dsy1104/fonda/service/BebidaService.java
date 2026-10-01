@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import cl.dsy1104.exception.RecursoNoEncontradoException;
 import cl.dsy1104.fonda.dto.BebidaRequest;
 import cl.dsy1104.fonda.dto.BebidaResponse;
 import cl.dsy1104.fonda.model.Bebida;
@@ -34,7 +35,7 @@ public class BebidaService {
     // Buscar bebida por ID
     public BebidaResponse buscarBebidaPorId(Long id) {
         Bebida bebida = bebidaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Bebida no encontrada con el ID: " + id));
+                .orElseThrow(() -> new RecursoNoEncontradoException("Bebida no encontrada con el ID: " + id));
         return convertirAResponse(bebida);
     }
 
@@ -50,7 +51,7 @@ public class BebidaService {
     public BebidaResponse actualizarBebida(Long id, BebidaRequest request) {
         validarCamposPorTipo(request);
         Bebida existente = bebidaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Bebida no encontrada con el ID: " + id));
+                .orElseThrow(() -> new RecursoNoEncontradoException("Bebida no encontrada con el ID: " + id));
 
         existente.setNombre(request.getNombre());
         existente.setTipo(request.getTipo());
@@ -68,14 +69,14 @@ public class BebidaService {
     // Eliminar una bebida
     public void eliminarBebida(Long id) {
         Bebida bebida = bebidaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Bebida no encontrada con el ID: " + id));
+                .orElseThrow(() -> new RecursoNoEncontradoException("Bebida no encontrada con el ID: " + id));
         bebidaRepository.delete(bebida);
     }
 
     // Cambiar estado de venta restringida
     public BebidaResponse toggleRestriccion(Long id) {
         Bebida bebida = bebidaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Bebida no encontrada con el ID: " + id));
+                .orElseThrow(() -> new RecursoNoEncontradoException("Bebida no encontrada con el ID: " + id));
         bebida.setVentaRestringida(!bebida.isVentaRestringida());
         Bebida guardada = bebidaRepository.save(bebida);
         return convertirAResponse(guardada);
