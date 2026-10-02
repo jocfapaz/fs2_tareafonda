@@ -13,7 +13,7 @@ export default function VentaHistorial({ ventas }) {
             {ventas.map(v => (
               <tr key={v.id}>
                 <td>#{v.id}</td>
-                <td>{v.nombre}</td>
+                <td>{v.nombreBebida}</td>
                 <td>{v.unidades}</td>
                 <td>${v.total?.toLocaleString('es-CL')}</td>
                 <td>
