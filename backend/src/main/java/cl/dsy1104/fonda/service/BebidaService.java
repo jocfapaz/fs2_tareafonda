@@ -40,7 +40,6 @@ public class BebidaService {
 
     // Crear una nueva bebida
     public BebidaResponse crearBebida(BebidaRequest request) {
-        validarCamposPorTipo(request);
         Bebida bebida = convertirAEntity(request);
         Bebida guardada = bebidaRepository.save(bebida);
         return convertirAResponse(guardada);
@@ -48,7 +47,6 @@ public class BebidaService {
 
     // Actualizar una bebida existente
     public BebidaResponse actualizarBebida(Long id, BebidaRequest request) {
-        validarCamposPorTipo(request);
         Bebida existente = bebidaRepository.findById(id)
                 .orElseThrow(() -> new RecursoNoEncontradoException("Bebida no encontrada con el ID: " + id));
 
@@ -79,28 +77,6 @@ public class BebidaService {
         bebida.setVentaRestringida(!bebida.isVentaRestringida());
         Bebida guardada = bebidaRepository.save(bebida);
         return convertirAResponse(guardada);
-    }
-
-    // Validación condicional según tipo de bebida
-    private void validarCamposPorTipo(BebidaRequest request) {
-        if (request.getTipo() == TipoBebida.ALCOHOLICA) {
-            if (request.getGradosAlcohol() == null) {
-                throw new IllegalArgumentException("gradosAlcohol es obligatorio para bebidas alcohólicas");
-            }
-            if (request.getGradosAlcohol() < 0.5 || request.getGradosAlcohol() > 45) {
-                throw new IllegalArgumentException("gradosAlcohol debe estar entre 0.5 y 45");
-            }
-            request.setAzucarPorLitro(null);
-        } else if (request.getTipo() == TipoBebida.SIN_ALCOHOL) {
-            if (request.getAzucarPorLitro() == null) {
-                throw new IllegalArgumentException("azucarPorLitro es obligatorio para bebidas sin alcohol");
-            }
-            if (request.getAzucarPorLitro() < 0) {
-                throw new IllegalArgumentException("azucarPorLitro debe ser mayor o igual a cero");
-            }
-            request.setGradosAlcohol(null);
-            request.setCertificada(null);
-        }
     }
 
     // Calcular precio según tipo y atributos

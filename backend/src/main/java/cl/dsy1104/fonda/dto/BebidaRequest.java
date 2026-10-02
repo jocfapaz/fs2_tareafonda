@@ -1,11 +1,13 @@
 package cl.dsy1104.fonda.dto;
 
 import cl.dsy1104.fonda.model.TipoBebida;
+import cl.dsy1104.fonda.validation.BebidaValida;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+@BebidaValida
 public class BebidaRequest {
     
     @NotBlank(message = "El nombre no puede estar vacío")
