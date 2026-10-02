@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-export default function BebidaList({ bebidas, onBuscar, onDelete, onToggleRestriccion }) {
+export default function BebidaList({ bebidas, onBuscar, onDelete, onToggleRestriccion, onEdit }) {
   const [filtro, setFiltro] = useState('');
 
   const handleBuscar = (e) => {
@@ -86,6 +86,12 @@ export default function BebidaList({ bebidas, onBuscar, onDelete, onToggleRestri
                     )}
                   </td>
                   <td className="p-4 text-right space-x-2">
+                    <button 
+                      className="px-3 py-1 text-xs font-bold rounded-lg border-2 border-blue-400 bg-blue-100 text-blue-900 hover:bg-blue-200 transition-colors shadow-sm" 
+                      onClick={() => onEdit(b)}
+                    >
+                      Editar
+                    </button>
                     <button 
                       className="px-3 py-1 text-xs font-bold rounded-lg border-2 border-amber-400 bg-amber-100 text-amber-900 hover:bg-amber-200 transition-colors shadow-sm" 
                       onClick={() => onToggleRestriccion(b.id)}

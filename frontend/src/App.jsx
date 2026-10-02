@@ -3,6 +3,7 @@ import { Container, Alert } from "react-bootstrap";
 import { 
   listarBebidas, 
   crearBebida, 
+  actualizarBebida, 
   eliminarBebida, 
   restringirVenta, 
   registrarVenta, 
@@ -27,6 +28,7 @@ import VentaHistorial from "./components/VentaHistorial";
  */
 export default function App() {
   const [bebidas, setBebidas] = useState([]);
+  const [bebidaEnEdicion, setBebidaEnEdicion] = useState(null);
   const [ventas, setVentas] = useState([]);
   const [erroresForm, setErroresForm] = useState(null);
   const [errorVenta, setErrorVenta] = useState(null);
@@ -63,9 +65,37 @@ export default function App() {
     }
   };
 
+  const handleEditarBebida = (bebida) => {
+    setErroresForm(null);
+    setErrorGlobal(null);
+    setBebidaEnEdicion(bebida);
+  };
+
+  const handleActualizarBebida = async (id, datos) => {
+    try {
+      setErroresForm(null);
+      await actualizarBebida(id, datos);
+      setBebidaEnEdicion(null);
+      await cargarDatos();
+    } catch (err) {
+      if (err.campos) {
+        setErroresForm(err.campos);
+      } else {
+        setErrorGlobal(err.mensaje || "No se pudo actualizar la bebida.");
+      }
+    }
+  };
+
+  const handleCancelarEdicion = () => {
+    setErroresForm(null);
+    setErrorGlobal(null);
+    setBebidaEnEdicion(null);
+  };
+
   const handleEliminarBebida = async (id) => {
     try {
       await eliminarBebida(id);
+      if (bebidaEnEdicion?.id === id) setBebidaEnEdicion(null);
       await cargarDatos();
     } catch (err) {
       setErrorGlobal("No se pudo eliminar la bebida.");
@@ -129,12 +159,19 @@ export default function App() {
 
         {/* Secciones del Sistema */}
         <main className="space-y-6">
-          <BebidaForm onSave={handleCrearBebida} errores={erroresForm} />
+          <BebidaForm 
+            onSave={handleCrearBebida} 
+            onUpdate={handleActualizarBebida} 
+            onCancel={handleCancelarEdicion}
+            bebida={bebidaEnEdicion}
+            errores={erroresForm} 
+          />
           <BebidaList 
             bebidas={bebidas} 
             onBuscar={cargarDatos} 
             onDelete={handleEliminarBebida} 
             onToggleRestriccion={handleToggleRestriccion} 
+            onEdit={handleEditarBebida}
           />
           <VentaForm 
             bebidas={bebidas} 

@@ -1,15 +1,35 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-export default function BebidaForm({ onSave, errores }) {
-  const [form, setForm] = useState({
-    nombre: '',
-    tipo: 'ALCOHOLICA',
-    volumenML: 500,
-    stock: 10,
-    gradosAlcohol: 12,
-    certificada: true,
-    azucarPorLitro: 0
-  });
+const FORM_INICIAL = {
+  nombre: '',
+  tipo: 'ALCOHOLICA',
+  volumenML: 500,
+  stock: 10,
+  gradosAlcohol: 12,
+  certificada: true,
+  azucarPorLitro: 0
+};
+
+export default function BebidaForm({ onSave, onUpdate, onCancel, bebida, errores }) {
+  const [form, setForm] = useState({ ...FORM_INICIAL });
+
+  const editando = Boolean(bebida?.id);
+
+  useEffect(() => {
+    if (bebida) {
+      setForm({
+        nombre: bebida.nombre ?? '',
+        tipo: bebida.tipo ?? 'ALCOHOLICA',
+        volumenML: bebida.volumenML ?? 0,
+        stock: bebida.stock ?? 0,
+        gradosAlcohol: bebida.gradosAlcohol ?? FORM_INICIAL.gradosAlcohol,
+        certificada: bebida.certificada ?? FORM_INICIAL.certificada,
+        azucarPorLitro: bebida.azucarPorLitro ?? FORM_INICIAL.azucarPorLitro
+      });
+    } else {
+      setForm({ ...FORM_INICIAL });
+    }
+  }, [bebida]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -19,12 +39,20 @@ export default function BebidaForm({ onSave, errores }) {
       delete payload.gradosAlcohol;
       delete payload.certificada;
     }
-    onSave(payload);
+
+    if (editando) {
+      payload.ventaRestringida = Boolean(bebida.ventaRestringida);
+      onUpdate(bebida.id, payload);
+    } else {
+      onSave(payload);
+    }
   };
 
   return (
     <div className="card shadow-sm mb-4">
-      <div className="card-header bg-dark text-white"><h5 className="m-0">Nueva Bebida</h5></div>
+      <div className="card-header bg-dark text-white">
+        <h5 className="m-0">{editando ? 'Editar Bebida' : 'Nueva Bebida'}</h5>
+      </div>
       <div className="card-body">
         <form onSubmit={handleSubmit}>
           <div className="row g-3">
@@ -39,6 +67,7 @@ export default function BebidaForm({ onSave, errores }) {
                 <option value="ALCOHOLICA">Alcohólica</option>
                 <option value="SIN_ALCOHOL">Sin Alcohol</option>
               </select>
+              {errores?.tipo && <div className="text-danger small">{errores.tipo}</div>}
             </div>
             <div className="col-md-2">
               <label className="form-label">Volumen (ml)</label>
@@ -56,6 +85,7 @@ export default function BebidaForm({ onSave, errores }) {
                 <div className="col-md-6">
                   <label className="form-label">Grados de Alcohol</label>
                   <input type="number" step="0.1" className="form-control" value={form.gradosAlcohol} onChange={e => setForm({...form, gradosAlcohol: Number(e.target.value)})} />
+                  {errores?.gradosAlcohol && <div className="text-danger small">{errores.gradosAlcohol}</div>}
                 </div>
                 <div className="col-md-6 d-flex align-items-end">
                   <div className="form-check mb-2">
@@ -68,10 +98,21 @@ export default function BebidaForm({ onSave, errores }) {
               <div className="col-md-6">
                 <label className="form-label">Azúcar por Litro (g/L)</label>
                 <input type="number" className="form-control" value={form.azucarPorLitro} onChange={e => setForm({...form, azucarPorLitro: Number(e.target.value)})} />
+                {errores?.azucarPorLitro && <div className="text-danger small">{errores.azucarPorLitro}</div>}
               </div>
             )}
           </div>
-          <button type="submit" className="btn btn-success mt-3">Guardar Bebida</button>
+
+          <div className="mt-3 d-flex gap-2">
+            <button type="submit" className="btn btn-success">
+              {editando ? 'Guardar Cambios' : 'Guardar Bebida'}
+            </button>
+            {editando && (
+              <button type="button" className="btn btn-outline-secondary" onClick={onCancel}>
+                Cancelar
+              </button>
+            )}
+          </div>
         </form>
       </div>
     </div>
