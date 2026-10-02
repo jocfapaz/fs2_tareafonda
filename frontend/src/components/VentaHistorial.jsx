@@ -1,5 +1,11 @@
 import React from 'react';
 
+const MOTIVOS_RECHAZO = {
+  VENTA_RESTRINGIDA: 'Venta restringida',
+  LIMITE_EXCEDIDO: 'Límite de alcohol excedido',
+  STOCK_INSUFICIENTE: 'Stock insuficiente'
+};
+
 export default function VentaHistorial({ ventas }) {
   return (
     <div className="card shadow-sm">
@@ -7,7 +13,7 @@ export default function VentaHistorial({ ventas }) {
       <div className="card-body">
         <table className="table table-striped">
           <thead>
-            <tr><th>ID</th><th>Bebida</th><th>Unidades</th><th>Total</th><th>Estado</th></tr>
+            <tr><th>ID</th><th>Bebida</th><th>Unidades</th><th>Total</th><th>Estado</th><th>Motivo</th></tr>
           </thead>
           <tbody>
             {ventas.map(v => (
@@ -20,6 +26,15 @@ export default function VentaHistorial({ ventas }) {
                   <span className={`badge ${v.estado === 'AUTORIZADA' ? 'bg-success' : 'bg-danger'}`}>
                     {v.estado}
                   </span>
+                </td>
+                <td>
+                  {v.motivo ? (
+                    <span className="badge bg-warning text-dark">
+                      {MOTIVOS_RECHAZO[v.motivo] ?? v.motivo}
+                    </span>
+                  ) : (
+                    <span className="text-muted">—</span>
+                  )}
                 </td>
               </tr>
             ))}
