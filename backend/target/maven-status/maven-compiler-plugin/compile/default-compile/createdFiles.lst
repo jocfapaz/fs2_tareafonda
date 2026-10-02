@@ -2,6 +2,8 @@ cl\dsy1104\fonda\repository\VentaRepository.class
 cl\dsy1104\fonda\FondaApplication.class
 cl\dsy1104\fonda\model\TipoBebida.class
 cl\dsy1104\fonda\dto\BebidaRequest.class
+cl\dsy1104\fonda\validation\BebidaValida.class
+cl\dsy1104\fonda\validation\BebidaValidator.class
 cl\dsy1104\fonda\dto\VentaResponse.class
 cl\dsy1104\fonda\service\VentaService.class
 cl\dsy1104\fonda\exception\RecursoNoEncontradoException.class

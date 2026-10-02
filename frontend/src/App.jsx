@@ -33,9 +33,11 @@ export default function App() {
   const [erroresForm, setErroresForm] = useState(null);
   const [errorVenta, setErrorVenta] = useState(null);
   const [errorGlobal, setErrorGlobal] = useState(null);
+  const [cargando, setCargando] = useState(false);
 
   // Carga inicial de datos y filtro por nombre
   const cargarDatos = async (nombre = "") => {
+    setCargando(true);
     try {
       const dataBebidas = await listarBebidas(nombre);
       setBebidas(dataBebidas || []);
@@ -43,6 +45,8 @@ export default function App() {
       setVentas(dataVentas || []);
     } catch (err) {
       setErrorGlobal("Error al comunicarse con el servidor.");
+    } finally {
+      setCargando(false);
     }
   };
 
@@ -52,6 +56,7 @@ export default function App() {
 
   // Manejo de acciones
   const handleCrearBebida = async (datos) => {
+    setCargando(true);
     try {
       setErroresForm(null);
       await crearBebida(datos);
@@ -62,6 +67,8 @@ export default function App() {
       } else {
         setErrorGlobal("No se pudo crear la bebida.");
       }
+    } finally {
+      setCargando(false);
     }
   };
 
@@ -72,6 +79,7 @@ export default function App() {
   };
 
   const handleActualizarBebida = async (id, datos) => {
+    setCargando(true);
     try {
       setErroresForm(null);
       await actualizarBebida(id, datos);
@@ -83,6 +91,8 @@ export default function App() {
       } else {
         setErrorGlobal(err.mensaje || "No se pudo actualizar la bebida.");
       }
+    } finally {
+      setCargando(false);
     }
   };
 
@@ -93,31 +103,40 @@ export default function App() {
   };
 
   const handleEliminarBebida = async (id) => {
+    setCargando(true);
     try {
       await eliminarBebida(id);
       if (bebidaEnEdicion?.id === id) setBebidaEnEdicion(null);
       await cargarDatos();
     } catch (err) {
       setErrorGlobal("No se pudo eliminar la bebida.");
+    } finally {
+      setCargando(false);
     }
   };
 
   const handleToggleRestriccion = async (id) => {
+    setCargando(true);
     try {
       await restringirVenta(id);
       await cargarDatos();
     } catch (err) {
       setErrorGlobal("No se pudo cambiar la restricción.");
+    } finally {
+      setCargando(false);
     }
   };
 
   const handleRegistrarVenta = async (venta) => {
+    setCargando(true);
     try {
       setErrorVenta(null);
       await registrarVenta(venta.bebidaId, venta.unidades);
       await cargarDatos();
     } catch (err) {
       setErrorVenta(err);
+    } finally {
+      setCargando(false);
     }
   };
 
@@ -186,6 +205,16 @@ export default function App() {
         </footer>
 
       </div>
+
+      {/* Indicador de carga global */}
+      {cargando && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm">
+          <div className="bg-white rounded-2xl shadow-2xl border-4 border-yellow-400 p-6 flex flex-col items-center gap-3">
+            <div className="w-10 h-10 border-4 border-blue-900 border-t-yellow-400 rounded-full animate-spin"></div>
+            <p className="text-blue-900 font-black uppercase tracking-wide text-sm">Cargando...</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
