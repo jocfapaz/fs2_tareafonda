@@ -59,7 +59,7 @@ public class BebidaService {
         existente.setGradosAlcohol(request.getGradosAlcohol());
         existente.setCertificada(request.getCertificada());
         existente.setAzucarPorLitro(request.getAzucarPorLitro());
-        existente.setVentaRestringida(request.isVentaRestringida());
+        // Nota: ventaRestringida no se actualiza aquí; se maneja con PATCH /restriccion
 
         Bebida guardada = bebidaRepository.save(existente);
         return convertirAResponse(guardada);
